@@ -6,6 +6,7 @@
 package com.chess.engine.board;
 
 import com.chess.engine.pieces.Piece;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,14 +24,14 @@ public abstract class Tile {
         }
         
         //good practicec to return an immutible emptyTileMap but Idk how to do it 
-        return emptyTileMap;
+        return Collections.unmodifiableMap(emptyTileMap);
     }
     protected final int tileCoordinate;
     
-    private static final Map<Integer, EmptyTile> EMPTY_TILES = createAllPossibleEmptyTiles();
+    private static final Map<Integer, EmptyTile> EMPTY_TILES_CACHE = createAllPossibleEmptyTiles();
     
     public static Tile createTile(final int tileCoordinate, final Piece piece){
-        return piece != null ? new OccupiedTile(tileCoordinate,piece) : EMPTY_TILES.get(tileCoordinate);
+        return piece != null ? new OccupiedTile(tileCoordinate,piece) : EMPTY_TILES_CACHE.get(tileCoordinate);
     }
     private Tile(int tileCoordinate){ //Constructor for class tile 
         this.tileCoordinate = tileCoordinate;
